@@ -1,7 +1,7 @@
 apiVersion: appmesh.k8s.aws/v1beta2
 kind: Mesh
 metadata:
-  name: santosoc-mesh1
+  name: santosoc-mesh
 spec:
   namespaceSelector:
     matchLabels:
