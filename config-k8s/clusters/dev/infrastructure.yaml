@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./config-k8s/infrastructure/servicemesh/cluster-addons
+  path: ./infrastructure/servicemesh/cluster-addons
   prune: true
   validation: client
   healthChecks:
