@@ -1,0 +1,9 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blue
+  labels: 
+    mesh: santosoc-mesh
+    appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+    gateway: appmesh-gateway

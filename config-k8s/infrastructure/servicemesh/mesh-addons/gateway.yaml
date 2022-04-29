@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-gateway
+  namespace: appmesh-gateway
+  annotations:
+    # service.beta.kubernetes.io/aws-load-balancer-name: "ingress-external-lb"
+    # service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip
+    # service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8088
+      name: http
+  selector:
+    app: ingress-gateway
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingress-gateway
+  namespace: appmesh-gateway
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ingress-gateway
+  template:
+    metadata:
+      labels:
+        app: ingress-gateway
+    spec:
+      containers:
+        - name: envoy
+          image: 840364872350.dkr.ecr.us-west-2.amazonaws.com/aws-appmesh-envoy:v1.16.1.1-prod
+          ports:
+            - containerPort: 8088
+---
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualGateway
+metadata:
+  name: ingress-gateway
+  namespace: appmesh-gateway
+spec:
+  namespaceSelector:
+    matchLabels:
+      gateway: appmesh-gateway
+  podSelector:
+    matchLabels:
+      app: ingress-gateway
+  listeners:
+    - portMapping:
+        port: 8088
+        protocol: http

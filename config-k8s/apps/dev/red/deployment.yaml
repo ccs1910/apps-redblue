@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-app
+  labels:
+    app: blue-app
+  namespace: blue
+spec:
+  replicas: 3
+  minReadySeconds: 3
+  selector:
+    matchLabels:
+      app: blue-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9797"
+      labels:
+        app: blue-app
+    spec:
+      containers:
+      - name: blue-app
+        image: 450360193046.dkr.ecr.us-west-2.amazonaws.com/santosoc-blue:stable
+        imagePullPolicy: IfNotPresent
+        ports:
+          - name: http
+            containerPort: 5001
+            protocol: TCP
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+      # nodeSelector:
+        # eks.amazonaws.com/nodegroup: linux2
+      # affinity: {}

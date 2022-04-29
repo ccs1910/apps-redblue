@@ -1,0 +1,15 @@
+---
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: GatewayRoute
+metadata:
+  name: gateway-route-blue
+  namespace: blue
+spec:
+  httpRoute:
+    match:
+      prefix: "/blue/"
+    action:
+      target:
+        virtualService:
+          virtualServiceRef:
+            name: blue

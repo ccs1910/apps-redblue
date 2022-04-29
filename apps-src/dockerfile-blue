@@ -1,0 +1,22 @@
+FROM python:3.7.2-alpine3.9
+
+RUN apk add --update gcc
+RUN apk add --update libffi libffi-dev openssl-dev
+RUN apk add --update python3
+RUN python3 -m ensurepip && pip3 install -U pip
+RUN apk --update add python3 bash build-base python3-dev freetds-dev unixodbc-dev git py-pip
+RUN ln -s /usr/include/locale.h /usr/include/xlocale.h
+RUN apk add --update freetds
+RUN echo [FreeTDS] > /etc/odbcinst.ini
+RUN echo Description=FreeTDS Driver >> /etc/odbcinst.ini
+RUN echo Driver=/usr/lib/libtdsodbc.so >> /etc/odbcinst.ini
+
+ADD requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY src/ src/
+RUN mkdir -p src/logs 
+
+WORKDIR /src
+EXPOSE 5001
+CMD ["python3","blue.py"]
