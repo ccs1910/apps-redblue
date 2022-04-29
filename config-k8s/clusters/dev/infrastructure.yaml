@@ -38,7 +38,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./config-k8s/infrastructure/servicemesh/mesh
+  path: ./infrastructure/servicemesh/mesh
   prune: true
   validation: client
 ---
