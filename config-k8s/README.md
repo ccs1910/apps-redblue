@@ -10,6 +10,11 @@ References : https://aws.amazon.com/premiumsupport/knowledge-center/eks-cluster-
 $ kubectl config current-context
 ```
 
+3. Check If your EKS Cluster satisfies the pre-requisites
+```
+$ flux check --pre
+```
+
 ## Flux CD Installation
 
 1. This guideline is using Github. Therefore, we need to get the Github token to connect the FluxCD with the repository. 
@@ -37,4 +42,9 @@ $ flux bootstrap github \
 3. Check if flux-system is installed. You will see namespace "flux-system" 
 ```
 $ kubectl get ns
+```
+
+4. Wait until the configuration completed. the "READY" indicator should be "True"
+```
+$ watch flux get kustomization
 ```
