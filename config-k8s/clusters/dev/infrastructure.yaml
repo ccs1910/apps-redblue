@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infrastructure/servicemesh/cluster-addons
+  path: ./config-k8s/infrastructure/servicemesh/cluster-addons
   prune: true
   validation: client
   healthChecks:
@@ -38,7 +38,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infrastructure/servicemesh/mesh
+  path: ./config-k8s/infrastructure/servicemesh/mesh
   prune: true
   validation: client
 ---
@@ -55,7 +55,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infrastructure/servicemesh/mesh-addons
+  path: ./config-k8s/infrastructure/servicemesh/mesh-addons
   prune: true
   validation: client
   healthChecks:

@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./apps/dev
+  path: ./config-k8s/apps/dev
   prune: true
   validation: client
   
